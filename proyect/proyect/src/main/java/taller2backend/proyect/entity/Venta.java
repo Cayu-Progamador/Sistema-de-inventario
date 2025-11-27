@@ -1,6 +1,7 @@
 package taller2backend.proyect.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -18,7 +19,9 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -58,10 +61,11 @@ public class Venta {
     private MetodoPago metodoPago;
 
     @OneToOne(mappedBy = "venta", cascade = CascadeType.ALL)
+   
     private DocumentoVenta documentoVenta;
 
     @OneToMany(mappedBy = "venta")
-    private Set<DetalleVenta> detalleVenta;
+    private List<DetalleVenta> detalleVenta;
 
     @OneToMany(mappedBy = "venta")
     private Set<DetalleDescuento> detalleDescuento;

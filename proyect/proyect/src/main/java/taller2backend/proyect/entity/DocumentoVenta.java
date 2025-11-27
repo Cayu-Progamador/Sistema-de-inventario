@@ -5,7 +5,9 @@ import java.util.Date;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Entity
@@ -39,6 +41,8 @@ public class DocumentoVenta {
     // Relación 1:1
     @OneToOne
     @JoinColumn(name = "idventa")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Venta venta;
     
     // Relación N:1

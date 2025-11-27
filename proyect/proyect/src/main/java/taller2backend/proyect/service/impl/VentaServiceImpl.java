@@ -3,10 +3,13 @@ package taller2backend.proyect.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import taller2backend.proyect.dto.DetalleDto;
 // --- Importa tus DTOs ---
 import taller2backend.proyect.dto.DetalleVentaDTO;
+import taller2backend.proyect.dto.DetallesVentasDto;
 import taller2backend.proyect.dto.HistorialProductoDTO;
 import taller2backend.proyect.dto.VentaDTO;
+import taller2backend.proyect.dto.VentaListadoDto;
 import taller2backend.proyect.dto.VentaRequestDto;
 import taller2backend.proyect.entity.Cliente;
 // --- Importa tus Entidades ---
@@ -30,6 +33,7 @@ import taller2backend.proyect.repository.MetodoPagoRepository;
 // --- Importa el Servicio y la Excepción ---
 import taller2backend.proyect.service.VentaService;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -166,8 +170,51 @@ public class VentaServiceImpl implements VentaService {
     }
 
     // En tu VentaService.java
-     public List<VentaDTO> obtenerVentasConDetalle() {
+    public List<VentaDTO> obtenerVentasConDetalle() {
         return ventaRepository.listarVentasConDetalle();
+    }
+
+    // Obtener detalle de una venta por ID
+    public DetalleDto obtenerDetalleVenta(Long id) {
+        Venta venta = ventaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada con id " + id));
+        return convertirAVentaDetalleDto(venta);
+    }
+
+    private DetalleDto convertirAVentaDetalleDto(Venta venta) {
+        List<DetallesVentasDto> detalles = venta.getDetalleVenta() != null ? venta.getDetalleVenta().stream()
+                .map(det -> new DetallesVentasDto(
+                        det.getProducto().getNombreProducto(),
+                        det.getPrecioUnitario(),
+                        det.getCantidad(),
+                        det.getPrecioUnitario() * det.getCantidad()))
+                .toList()
+                : Collections.emptyList();
+
+        return new DetalleDto(detalles);
+    }
+
+    /// lista todas las ventas realizadas
+    @Transactional
+    @Override
+    public List<VentaListadoDto> listarVentas() {
+        List<Venta> ventas = ventaRepository.findAll(); // traes todas las ventas
+        return ventas.stream()
+                .map(this::convertirAVentaListadoDto)
+                .toList();
+    }
+
+    private VentaListadoDto convertirAVentaListadoDto(Venta venta) {
+        return new VentaListadoDto(
+                venta.getIdVenta(),
+                venta.getFechaVenta(),
+                venta.getNumeroVenta(),
+                venta.getTotalventa(),
+                venta.getSubtotal(),
+                venta.getTotalDescuento(),
+                venta.getEstado(),
+                venta.getEmpleado().getNombre()
+        );
     }
 
 }

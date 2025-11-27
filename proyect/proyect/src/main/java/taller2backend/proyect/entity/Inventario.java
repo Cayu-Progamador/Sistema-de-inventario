@@ -1,18 +1,13 @@
 package taller2backend.proyect.entity;
 
-import jakarta.persistence.Entity;
-
 import java.util.Date;
 
 import jakarta.persistence.*;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 @Entity
 @Data
 @NoArgsConstructor
@@ -44,6 +39,8 @@ public class Inventario {
     // Relación 1:1
     @OneToOne
     @JoinColumn(name = "idproducto")
+    @ToString.Exclude          // <--- AGREGA ESTO
+    @EqualsAndHashCode.Exclude // <--- AGREGA ESTO
     private Producto producto;
     
 }

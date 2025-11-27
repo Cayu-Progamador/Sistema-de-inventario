@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import taller2backend.proyect.dto.DetalleDto;
 import taller2backend.proyect.dto.HistorialProductoDTO;
 import taller2backend.proyect.dto.VentaDTO;
+import taller2backend.proyect.dto.VentaListadoDto;
 import taller2backend.proyect.dto.VentaRequestDto;
 import taller2backend.proyect.entity.Venta;
 import taller2backend.proyect.service.VentaService;
@@ -30,22 +32,35 @@ public class VentaController {
         return ResponseEntity.ok(ventaCreada);
     }
 
-    //historial de compras del cliente
+    // historial de compras del cliente
     @GetMapping("/historial/{idCliente}")
     public ResponseEntity<List<HistorialProductoDTO>> getHistorialCompras(@PathVariable Long idCliente) {
         List<HistorialProductoDTO> historial = ventaService.historialCliente(idCliente);
-        if(historial.isEmpty()){
+        if (historial.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(historial);
 
     }
 
-    //Listar la ventas
+    // Listar la ventas
     @GetMapping("/lista-dto")
     public ResponseEntity<List<VentaDTO>> listarVentasConDetalle() {
         List<VentaDTO> ventas = ventaService.obtenerVentasConDetalle();
         return ResponseEntity.ok(ventas);
+    }
+
+
+    //listar todad ventas realizadas
+    @GetMapping("/listado")
+    public List<VentaListadoDto> listarVentas() {
+        return ventaService.listarVentas();
+    }
+
+    //listar todos los detalles de ventas
+    @GetMapping("/{id}")
+    public DetalleDto obtenerDetalleVenta(@PathVariable Long id) {
+        return ventaService.obtenerDetalleVenta(id);
     }
 
 }

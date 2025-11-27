@@ -30,7 +30,13 @@ export default {
     },
     //listar ventas
     listarVentas(){
-        return apiClient.get('/lista-dto')
+        return apiClient.get('/listado')
+    },
+    //listar todos los detalles de ventas
+    obtererDetalleventa(id){
+        return apiClient.get(`/${id}`)
     }
+
+
 
 };

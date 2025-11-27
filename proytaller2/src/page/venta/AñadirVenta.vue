@@ -71,48 +71,6 @@
             </q-card-section>
             
             <q-card-section class="q-gutter-md">
-              
-              <div class="row items-center q-gutter-sm">
-                <q-input
-                  class="col"
-                  label-color="teal-10"
-                  bg-color="teal-1"
-                  outlined
-                  dense
-                  v-model="codigoBusqueda"
-                  label="Escanear Código de Barras..."
-                  @keyup.enter="buscarPorCodigo"
-                  :loading="buscandoPorCodigo"
-                >
-                  <template v-slot:prepend>
-                    <q-icon name="qr_code_scanner" />
-                  </template>
-                </q-input>
-                
-                <q-input
-                  class="col-2"
-                  label-color="teal-10"
-                  bg-color="teal-1"
-                  outlined
-                  dense
-                  v-model.number="cantidadCodigo"
-                  type="number"
-                  label="Cant."
-                  :min="1"
-                  @keyup.enter="buscarPorCodigo"
-                />
-                
-                <q-btn
-                  class="col-auto bg-teal-10 text-white"
-                  padding="sm"
-                  color="primary"
-                  icon="add_shopping_cart"
-                  @click="buscarPorCodigo"
-                  unelevated
-                  title="Añadir por código"
-                />
-              </div>
-
               <div class="row items-center q-gutter-sm">
                 <q-select
                  label-color="teal-10"

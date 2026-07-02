@@ -8,7 +8,7 @@
             "type": "java",
             "name": "MetodoPago",
             "request": "launch",
-            "mainClass": "taller2backend.proyect.entity.MetodoPago",
+            "mainClass": "proyectobackend.proyect.entity.MetodoPago",
             "projectName": "proyect"
         },
         {
@@ -21,7 +21,7 @@
             "type": "java",
             "name": "ProyectApplication",
             "request": "launch",
-            "mainClass": "taller2backend.proyect.ProyectApplication",
+            "mainClass": "proyectobackend.proyect.ProyectApplication",
             "projectName": "proyect"
         }
     ]
